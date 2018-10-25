@@ -1,0 +1,110 @@
+package Demo6;
+
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
+import java.util.Queue;
+
+/**
+ * @author Joel
+ * @version Oct 10, 2018
+ * Luodaan hissien huoltomies
+ */
+public class Huoltomies implements Ihminen {
+    
+    String nimi;
+    String tunnus;
+    
+    static Queue<String> waitingQueue = new LinkedList<>();
+    static Queue<Huoltomies> waitingQueueH = new LinkedList<>();
+    
+    /**
+     * @param hissi Hissi johon huolto on tilattu
+     */
+    public static void tilaaHuolto(Hissi hissi){
+        try {
+            waitingQueue.remove();
+            hissi.aukiHuolto(waitingQueueH.remove());
+        }
+        catch (NoSuchElementException e) {
+            System.out.println("Ei ole vapaita työntekijöitä!");
+        }
+    }
+    
+    /**
+     * Rekisteröidään työntekijän tiedot
+     * @param nimi1 Työntekijän nimi
+     * @param tunnus1 Työntekijän tunnus
+     */
+    public void rekisteroi(String nimi1, String tunnus1) {
+        this.nimi = nimi1;
+        this.tunnus = tunnus1;
+    }    
+    
+    /**
+     * @return palautetaan miehen koodi hissiin
+     */
+    private String annaKoodi() {
+        return tunnus;
+    }
+    
+    /**
+     * @return palauttaa huoltomiehen koodin
+     */
+    public String getKoodi() {
+        return this.annaKoodi();
+    }
+    
+    /**
+     * Lisätään työntekijä vapaana olevaksi työntekijäksi
+     */
+    public void toihin() {
+        waitingQueue.add(this.nimi);
+        waitingQueueH.add(this);
+    }
+    
+    /**
+     * Poistetaan töissä oleva työntekijä jonosta
+     */
+    public void poistaQue(){
+        waitingQueue.remove();
+        waitingQueueH.remove();
+        
+    }
+    
+    /**
+     * @param args ei käytössä
+     */
+    public static void main(String[] args) {
+        Huoltomies h1 = new Huoltomies(); 
+        Huoltomies h2 = new Huoltomies();
+        
+        Hissi hissi1 = new Hissi();
+        hissi1.alusta();
+        Hissi hissi2 = new Hissi();
+        hissi2.alusta();
+        
+        h1.rekisteroi("Jorma","123");
+        h1.toihin();
+        h2.rekisteroi("Jesperi", "321");
+        h2.toihin();
+        
+        System.out.println("Vapaana : " + waitingQueue);
+        
+        hissi1.aukiHuolto(waitingQueueH.remove());
+        System.out.println("Vapaana : " + waitingQueue);
+        hissi2.aukiHuolto(h2);
+        hissi1.huoltoValmis(h1);
+        hissi2.aukiHuolto(h1);
+    }
+
+    @Override
+    public void aantele() {
+        System.out.println("Oispa k*ljaa...");
+    }
+
+    @Override
+    public void naytaHauis() {
+        System.out.println("" + nimi + " näyttää hauista.");
+    }
+
+}
