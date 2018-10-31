@@ -9,42 +9,43 @@ public class Hissi {
 
     Boolean huoltotila = false;
     Boolean auki = false;
-    int kerros = 1;
+    Kerros kerros;
     String koodi = "123";
     String nimi = "";
+    Kayttaja hississa;
     static Huoltomies Hmies; 
     private static int seuraavaNro   = 1;
+    
     
     
     /**
      * Kutsutaan hissiä 
      * @param i missä kutsutaan
+     * @param kayttaja Henkilö joka kutsui hissin
      */
-    private void kutsu(int i) {
+    protected void kutsu(Kerros i, Kayttaja kayttaja) {
         if(huoltotila){
             System.out.println("" + this.getNimi() +" on epäkunnossa!");
             return;
         }
-        //int missa = getKerros();
-        if(kerros == i) {
-            auki = true;
-            return;
-        }
-        //setKerros(i);
+       
         kerros = i;
+        auki = true;
+        hississa = kayttaja;
     }
     
     /**
      * Laitetaan hissi liikkeelle
      * @param i mihin mennään
      */
-    private void meno(int i) {
+    private void meno(Kerros k) {
         if(huoltotila){
             System.out.println(""+ this.getNimi() + " on epäkunnossa!");
             return;
         }
         auki = false;
-        setKerros(i);
+        kerros = k;
+        hississa = null;
     }
     
     /**
@@ -53,18 +54,6 @@ public class Hissi {
     private void huoltoon(){
         huoltotila = true;
         Huoltomies.tilaaHuolto(this);
-    }
-    
-    /**
-     * Asetetaan hissille kerros
-     * @param i asetettava kerros
-     */
-    private void setKerros(int i) {
-        if(auki == true) {
-            auki = false;
-        }
-        kerros = i;
-        auki = true;
     }
     
     /**
@@ -121,6 +110,14 @@ public class Hissi {
 
         Hissi hissi1 = new Hissi();
         Hissi hissi2 = new Hissi();
+        Kayttaja juuso = new Kayttaja();
+        Kerros kerros1 = new Kerros();
+        kerros1.asetaKerros();
+        Kerros kerros2= new Kerros();
+        kerros2.asetaKerros();
+        Kerros kerros3= new Kerros();
+        kerros3.asetaKerros();
+        
         
         Huoltomies h1 = new Huoltomies();
         h1.rekisteroi("Seppo", "123");
@@ -128,23 +125,23 @@ public class Hissi {
         hissi1.alusta();
         hissi2.alusta();
         
-        hissi1.kutsu(1);
-        hissi2.kutsu(2);
+        hissi1.kutsu(kerros1,juuso);
+        hissi2.kutsu(kerros2,juuso);
         
-        hissi1.meno(3);
-        hissi2.meno(4);
+        hissi1.meno(kerros3);
+        hissi2.meno(kerros2);
         
         hissi1.huoltoon();
         hissi2.huoltoon();
         
-        hissi1.meno(4);
-        hissi2.meno(3);
+        hissi1.meno(kerros3);
+        hissi2.meno(kerros1);
         
         hissi1.huoltoValmis(Hmies);
         hissi2.huoltoValmis(Hmies);
         
-        hissi1.kutsu(3);
-        hissi2.kutsu(5);
+        hissi1.kutsu(kerros3,juuso);
+        hissi2.kutsu(kerros1,juuso);
         
         hissi2.huoltoon();
         hissi2.huoltoValmis(Hmies);
