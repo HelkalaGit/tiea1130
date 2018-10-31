@@ -1,0 +1,39 @@
+package Demo6;
+
+/**
+ * @author Joel
+ * @version Oct 30, 2018
+ * Luokka kerros olion luonnille.
+ */
+public class Kerros {
+
+    private int kerros = 0;
+    private static int seuraava = 1;
+    
+    private void alusta() {
+        kerros = seuraava;
+        seuraava++;
+    }
+    
+    /**
+     * Alustetaan kerros
+     */
+    public void asetaKerros() {
+        alusta();
+    }
+    
+    /**
+     * @param args ei käytössä
+     */
+    public static void main(String[] args) {
+        Kerros kerros1 = new Kerros();
+        kerros1.alusta();
+        Kerros kerros2 = new Kerros();
+        kerros2.alusta();
+        Kerros kerros3 = new Kerros();
+        kerros3.alusta();
+        Kerros kerros4 = new Kerros();
+        kerros4.alusta();
+    }
+
+}
