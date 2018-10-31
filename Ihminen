@@ -1,9 +1,10 @@
 package Demo6;
 
+
 /**
  * @author Joel
- * @version Oct 25, 2018
- * Huoltomiehen perintä luokka
+ * @version Oct 30, 2018
+ * Ihmisen perintä luokka. Enemmänkin esimerkin vuoksi.
  */
 public interface Ihminen {
     
@@ -16,5 +17,16 @@ public interface Ihminen {
      * Ihminen näyttää hauista
      */
     void naytaHauis();
+    
+    /**
+     * Asetetaan ihmiselle nimi
+     * @param nimi ihmisen nimi
+     */
+    void nimi(String nimi);
 
+    /**
+     * Asetetaan ihmisen syntymävuosi
+     * @param sAika syntymäaika
+     */
+    void ika(int sAika);
 }
