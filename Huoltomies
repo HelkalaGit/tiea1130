@@ -11,8 +11,9 @@ import java.util.Queue;
  */
 public class Huoltomies implements Ihminen {
     
-    String nimi;
+    static String nimi;
     String tunnus;
+    int syntyma;
     
     static Queue<String> waitingQueue = new LinkedList<>();
     static Queue<Huoltomies> waitingQueueH = new LinkedList<>();
@@ -36,7 +37,7 @@ public class Huoltomies implements Ihminen {
      * @param tunnus1 Työntekijän tunnus
      */
     public void rekisteroi(String nimi1, String tunnus1) {
-        this.nimi = nimi1;
+        Huoltomies.nimi = nimi1;
         this.tunnus = tunnus1;
     }    
     
@@ -58,7 +59,7 @@ public class Huoltomies implements Ihminen {
      * Lisätään työntekijä vapaana olevaksi työntekijäksi
      */
     public void toihin() {
-        waitingQueue.add(this.nimi);
+        waitingQueue.add(Huoltomies.nimi);
         waitingQueueH.add(this);
     }
     
@@ -76,16 +77,19 @@ public class Huoltomies implements Ihminen {
      */
     public static void main(String[] args) {
         Huoltomies h1 = new Huoltomies(); 
+        h1.nimi("Jorma");
+        h1.ika(1995);
         Huoltomies h2 = new Huoltomies();
+        h2.nimi("Jesse");
         
         Hissi hissi1 = new Hissi();
         hissi1.alusta();
         Hissi hissi2 = new Hissi();
         hissi2.alusta();
         
-        h1.rekisteroi("Jorma","123");
+        h1.rekisteroi(nimi,"123");
         h1.toihin();
-        h2.rekisteroi("Jesperi", "321");
+        h2.rekisteroi(nimi, "321");
         h2.toihin();
         
         System.out.println("Vapaana : " + waitingQueue);
@@ -107,4 +111,13 @@ public class Huoltomies implements Ihminen {
         System.out.println("" + nimi + " näyttää hauista.");
     }
 
+    @Override
+    public void nimi(String n) {
+        nimi = n;
+    }
+
+    @Override
+    public void ika(int sAika){
+        syntyma = sAika;
+    }
 }
