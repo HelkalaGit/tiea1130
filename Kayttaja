@@ -1,0 +1,45 @@
+package Demo6;
+
+/**
+ * @author Joel
+ * @version Oct 30, 2018
+ * Luokka Kayttajan oliolle
+ */
+public class Kayttaja implements Ihminen{
+    
+    private String nimi;
+    private int syntyma;
+  
+    /**
+     * @param args ei käytössä
+     */
+    public static void main(String[] args) {
+        Kayttaja hessu = new Kayttaja();
+        hessu.nimi("Hessu");
+        Kerros kerros1 = new Kerros();
+        Hissi hissi1 = new Hissi();
+        
+        hissi1.kutsu(kerros1,hessu);
+        
+    }
+
+    @Override
+    public void aantele() {
+        System.out.println("Tulis jo....");
+    }
+
+    @Override
+    public void naytaHauis() {
+        System.out.println(nimi + " näyttää hauista!");
+    }
+
+    @Override
+    public void nimi(String n) {
+        nimi = ""+ n;
+    }
+    
+    @Override
+    public void ika(int sAika){
+        syntyma = sAika;
+    }
+}
